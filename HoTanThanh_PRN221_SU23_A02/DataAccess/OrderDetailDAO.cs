@@ -54,6 +54,20 @@ namespace DataAccess
             {
                 using (var context = new FUFlowerBouquetManagementContext())
                 {
+                    var order = context.Orders.SingleOrDefault(o => o.OrderId == orderDetail.OrderId);
+                    var orderDetails = context.OrderDetails.Where(o => o.OrderId == orderDetail.OrderId).AsNoTracking().ToList();
+                    order.Total = 0;
+                    foreach (var item in orderDetails)
+                    {
+                        if (item.OrderId == orderDetail.OrderId && item.FlowerBouquetId == orderDetail.FlowerBouquetId)
+                        {
+                            order.Total += (orderDetail.UnitPrice * orderDetail.Quantity) * (decimal)((100 - orderDetail.Discount) / 100);
+                        }
+                        else
+                        {
+                            order.Total += (item.UnitPrice * item.Quantity) * (decimal)((100 - item.Discount) / 100);
+                        }
+                    }
                     context.Entry<OrderDetail>(orderDetail).State =
                         Microsoft.EntityFrameworkCore.EntityState.Modified;
                     context.SaveChanges();
@@ -70,6 +84,20 @@ namespace DataAccess
             {
                 using (var context = new FUFlowerBouquetManagementContext())
                 {
+                    var order = context.Orders.SingleOrDefault(o => o.OrderId == orderDetail.OrderId);
+                    var orderDetails = context.OrderDetails.Where(o => o.OrderId == orderDetail.OrderId).AsNoTracking().ToList();
+                    order.Total = 0;
+                    foreach (var item in orderDetails)
+                    {
+                        if (item.OrderId == orderDetail.OrderId && item.FlowerBouquetId == orderDetail.FlowerBouquetId)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            order.Total += (item.UnitPrice * item.Quantity) * (decimal)((100 - item.Discount) / 100);
+                        }
+                    }
                     context.Remove(orderDetail);
                     context.SaveChanges();
                 }

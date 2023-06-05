@@ -11,6 +11,12 @@
 <div>
     <h4>FlowerBouquet</h4>
     <hr />
+    @if (ViewData["Message"] != null)
+    {
+        <div class="alert alert-warning text-center" role="alert">
+            @Html.Raw(@ViewData["Message"])
+        </div>
+    }
     <dl class="row">
         <dt class="col-sm-2">
             Flower Bouquet Name

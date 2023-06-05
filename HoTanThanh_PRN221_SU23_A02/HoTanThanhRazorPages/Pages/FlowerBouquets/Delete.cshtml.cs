@@ -10,12 +10,16 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using Repository.FlowerBouquetRepo;
+using Repository.OrderDetailRepo;
+using Repository.OrderRepo;
 
 namespace HoTanThanhRazorPages.Pages.FlowerBouquets
 {
     public class DeleteModel : PageModel
     {
         private readonly IFlowerRepo repo = new FlowerRepo();
+        private readonly IOrderDetailRepo orderDetailRepo = new OrderDetailRepo();
+        private readonly IOrderRepo orderRepo = new OrderRepo();
 
         [BindProperty]
         public FlowerBouquet FlowerBouquet { get; set; }
@@ -34,15 +38,45 @@ namespace HoTanThanhRazorPages.Pages.FlowerBouquets
 
         public IActionResult OnPostAsync(int id)
         {
-            if (id <= 0)
+            List<Order> order = (List<Order>)orderRepo.GetOrders();
+            List<int> listId = new List<int>();
+
+            FlowerBouquet = repo.GetFlower(id);
+
+            bool check = true;
+
+            foreach (Order orderItem in order)
             {
-                return NotFound();
-            } else
+                listId.Add(orderItem.OrderId);
+            }
+            foreach (var orderId in listId)
             {
-                FlowerBouquet = repo.GetFlower(id);
+                List<OrderDetail> orderdetail = (List<OrderDetail>)orderDetailRepo.GetOrderDetailByOrderId(orderId);
+                foreach (var orderDetail in orderdetail)
+                {
+                    if (orderDetail.FlowerBouquetId == id)
+                    {
+                        check = false; break;
+                    }
+                }
+                if (check == false)
+                {
+                    break;
+                }
+            }
+
+            if (!check)
+            {
+                ViewData["Message"] = "FlowerBouquet are in cart! Cannot delete!";
+                return Page();
+            }
+            else
+            {
+                
                 repo.Delete(FlowerBouquet);
                 return RedirectToPage("./Index");
             }
+
         }
     }
 }
