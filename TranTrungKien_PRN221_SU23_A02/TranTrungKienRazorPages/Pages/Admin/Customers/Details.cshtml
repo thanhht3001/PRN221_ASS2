@@ -1,0 +1,53 @@
+﻿@page
+@model TranTrungKienRazorPages.Pages.Customers.DetailsModel
+@{
+    ViewData["Title"] = "Customer Details";
+    Layout = "_AdminLayout";
+}
+
+<div class="h1 mb-4">Customer Details</div>
+
+<hr />
+<dl class="row">
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Customer.Email)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Customer.Email)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Customer.CustomerName)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Customer.CustomerName)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Customer.City)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Customer.City)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Customer.Country)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Customer.Country)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Customer.Password)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Customer.Password)
+    </dd>
+    <dt class="col-sm-2">
+        @Html.DisplayNameFor(model => model.Customer.Birthday)
+    </dt>
+    <dd class="col-sm-10">
+        @Html.DisplayFor(model => model.Customer.Birthday)
+    </dd>
+</dl>
+
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Customer.CustomerId" class="btn btn-primary mr-2">Edit</a>
+    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+</div>

@@ -1,0 +1,47 @@
+﻿@page "/cart"
+@model TranTrungKienRazorPages.Pages.Customers.CartModel
+@using TranTrungKienRazorPages.Utils
+@{
+    ViewData["Title"] = "Your cart";
+    Layout = "_CustomerLayout";
+}
+
+<div class="h1">Your Cart</div>
+
+<div class="d-flex justify-content-end mb-4">
+    <a asp-page="./Index" class="h6">Continue to shop</a>
+</div>
+
+<form method="post" asp-page="cart" asp-page-handler="update">
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Sub Total</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var item in Model.cart)
+        {
+            <tr>
+                <td>@item.FlowerBouquet.FlowerBouquetName</td>
+                <td>$@item.FlowerBouquet.UnitPrice</td>
+                <td><input type="number" name="quantities" value="@item.Quantity" min="1" style="width: 50px;" /></td>
+                <td>
+                    $@(item.FlowerBouquet.UnitPrice * item.Quantity)
+                </td> 
+                <td>
+                    <input class="btn btn-info mr-2" type="submit" value="Update" />
+                    <a asp-page="cart" asp-page-handler="delete" asp-route-id="@item.FlowerBouquet.FlowerBouquetId" class="btn btn-outline-danger">Remove</a>               
+                </td>
+            </tr>
+        }
+    </table>
+</form>
+
+<form method="post" asp-page="cart" asp-page-handler="checkout">
+    <input class="btn btn-success d-inline-block" type="submit" value="Checkout" />
+    <div class="h5 ml-3 mb-3 d-inline-block">
+        Total: $@Model.Total
+    </div>
+</form>

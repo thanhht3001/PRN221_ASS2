@@ -1,0 +1,51 @@
+﻿@page "/Admin/Orders/Edit/{id}"
+@model TranTrungKienRazorPages.Pages.Orders.EditModel
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "_AdminLayout";
+}
+
+<div class="h1 mb-4">Edit Order</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <input type="hidden" asp-for="Order.OrderId" />
+            <div class="form-group">
+                <label asp-for="Order.CustomerId" class="control-label"></label>
+                <select asp-for="Order.CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+                <span asp-validation-for="Order.CustomerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.OrderDate" class="control-label"></label>
+                <input asp-for="Order.OrderDate" class="form-control" />
+                <span asp-validation-for="Order.OrderDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.ShippedDate" class="control-label"></label>
+                <input asp-for="Order.ShippedDate" class="form-control" />
+                <span asp-validation-for="Order.ShippedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.Total" class="control-label"></label>
+                <input asp-for="Order.Total" class="form-control" />
+                <span asp-validation-for="Order.Total" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.OrderStatus" class="control-label"></label>
+                <input asp-for="Order.OrderStatus" class="form-control" />
+                <span asp-validation-for="Order.OrderStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3 mb-4">
+                <input type="submit" value="Save" class="btn btn-primary mr-2" />
+                <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="h6 text-danger text-center"></div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

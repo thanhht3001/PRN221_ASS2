@@ -1,0 +1,71 @@
+﻿@page "/shop"
+@model TranTrungKienRazorPages.Pages.Customers.IndexModel
+@{
+    ViewData["Title"] = "Flower Bouquets";
+    Layout = "_CustomerLayout";
+}
+
+<div class="h1">Flower Bouquet List</div>
+
+<form method="post" class="mb-4">
+    <div class="d-flex justify-content-end">
+        <input class="form-control w-25 mr-3" asp-for="SearchString" placeholder="Enter name"/>
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr class="table-primary">
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Unit Price
+            </th>
+            <th>
+                Units In Stock
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Supplier
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.FlowerBouquet)
+        {
+            <tr>
+                <td>
+                @Html.DisplayFor(modelItem => item.FlowerBouquetName)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.UnitsInStock)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.Supplier.SupplierName)
+                </td>
+                <td>
+                    <a asp-page="./Cart" asp-page-handler="addtocart" asp-route-id="@item.FlowerBouquetId" class="btn btn-warning" style="min-width: 120px;">Add To Cart</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

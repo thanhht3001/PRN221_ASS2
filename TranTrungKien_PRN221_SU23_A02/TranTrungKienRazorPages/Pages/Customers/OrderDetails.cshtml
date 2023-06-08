@@ -1,0 +1,47 @@
+﻿@page "/orders/{id}"
+@model TranTrungKienRazorPages.Pages.Customers.OrderDetailsModel
+@{
+    ViewData["Title"] = "Order Details";
+    Layout = "_CustomerLayout";
+}
+
+<div class="h1">Order Details</div>
+
+<table class="table mt-5">
+    <thead>
+        <tr>
+            <th>
+                Flower Bouquet Name
+            </th>
+            <th>
+                Unit Price
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDetail[0].Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDetail[0].Discount)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderDetail)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FlowerBouquet.FlowerBouquetName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discount)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-page="./Orders" class="btn btn-secondary">Back to your order list</a>
